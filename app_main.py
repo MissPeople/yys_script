@@ -81,6 +81,7 @@ class YysWin(QMainWindow):
     def get_config_from_param_cb(self):
         self.select_fun = self.ui.cb_fuctions.currentText()
         adb_port = self.ui.adb_port.text()
+        config.general['win_name'] = self.ui.window_name.text()
         p1 = self.ui.cb_p1.currentText()
         p2 = self.ui.cb_p2.currentText()
         p3 = self.ui.cb_p3.currentText()

@@ -75,4 +75,5 @@ class Robot(Base):
 
 
     def run(self):
+        self.resize_win_size()
         self.loop()

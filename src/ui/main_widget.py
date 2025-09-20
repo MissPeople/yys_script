@@ -26,14 +26,24 @@ class Ui_yys_win(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_0 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_0.setObjectName("horizontalLayout_0")
-        # label
-        self.label_window = QtWidgets.QLabel(self.verticalLayoutWidget)
-        self.label_window.setObjectName("label_window")
-        self.horizontalLayout_0.addWidget(self.label_window)
+        # label_adb
+        self.label_adb = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_adb.setObjectName("label_adb")
+        self.horizontalLayout_0.addWidget(self.label_adb)
 
         self.adb_port = QtWidgets.QLineEdit(self.verticalLayoutWidget)
         self.adb_port.setObjectName("adb_port")
         self.horizontalLayout_0.addWidget(self.adb_port)
+
+        # label_window
+        self.label_window = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.label_window.setObjectName("label_window")
+        self.horizontalLayout_0.addWidget(self.label_window)
+
+        self.window_name = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.window_name.setObjectName("window_name")
+        self.horizontalLayout_0.addWidget(self.window_name)
+
         self.verticalLayout.addLayout(self.horizontalLayout_0)
 
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -135,8 +145,9 @@ class Ui_yys_win(object):
 
     def retranslateUi(self, yys_win):
         _translate = QtCore.QCoreApplication.translate
-        yys_win.setWindowTitle(_translate("yys_win", "x笑cry-辅助工具"))
-        self.label_window.setText(_translate('yys_win', "请输入模拟器ADB端口："))
+        yys_win.setWindowTitle(_translate("yys_win", "yys-辅助工具"))
+        self.label_adb.setText(_translate('yys_win', "模拟器ADB端口："))
+        self.label_window.setText(_translate('yys_win', "模拟器名称："))
         self.label.setText(_translate("yys_win", "功能："))
         self.cb_fuctions.setItemText(0, _translate("yys_win", "御魂"))
         self.cb_fuctions.setItemText(1, _translate("yys_win", "困28"))

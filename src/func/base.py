@@ -2,7 +2,6 @@ import logging
 import os
 import random
 import struct
-import sys
 from random import randint
 
 import cv2
@@ -113,7 +112,7 @@ class Base(QThread):
             return None
 
     def resize_win_size(self):
-        handler = win32gui.FindWindow(0, self.win_name)  # 获取窗口句柄
+        handler = win32gui.FindWindow(0, config.general['win_name'])  # 获取窗口句柄
         self.x_top, self.y_top, self.x_bottom, self.y_bottom = \
             win32gui.GetWindowRect(handler)
         # self.win_width = self.x_bottom - self.x_top

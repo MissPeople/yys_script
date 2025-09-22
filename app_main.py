@@ -73,7 +73,7 @@ class YysWin(QMainWindow):
             titles = []
         elif self.select_fun == '机器人':
             attentions = config.robot['attention']
-            titles = [['副本', '逢魔', '狩猎', '斗技', '活动'],
+            titles = [['副本', '逢魔',  '斗技', '活动'],
                       ['挂机次数', '30', '50', '120', '999'],]
 
         self.show_attention(attentions)

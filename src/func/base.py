@@ -2,13 +2,13 @@ import logging
 import os
 import random
 import struct
-from random import randint
-
 import cv2
 import numpy as np
 import win32con
 import win32gui
 
+from datetime import datetime
+from random import randint
 from PIL import Image
 from PyQt5.QtCore import QThread, pyqtSignal
 from adb_shell.adb_device import AdbDeviceTcp
@@ -119,6 +119,10 @@ class Base(QThread):
         win32gui.SetWindowPos(handler, win32con.HWND_NOTOPMOST,
                                   self.x_top, self.y_top, 796, 488,
                                   win32con.SWP_SHOWWINDOW)
+        
+    def get_time_stmps(self):
+        timestamp = datetime.now().strftime("%H%M%S")
+        return timestamp
 
     def display_msg(self, msg):
         """输出日志到框内"""

@@ -28,9 +28,8 @@ class Base(QThread):
         self.quit_game_enable = quit_game_enable
         self.device = AdbDeviceTcp("127.0.0.1", port, default_transport_timeout_s=5.)
         self.device.connect()
-        output = self.device.shell("wm size").strip()
-        size = output.split(": ")[-1]
-        self.width,self.height = map(int, size.split("x"))
+        self.width = 796
+        self.height = 488
         self.x_top = self.y_top = self.x_bottom = self.y_bottom = 0
         self.res_path = '../resource'
 
@@ -69,8 +68,9 @@ class Base(QThread):
         self.device.shell(f"input tap {x} {y}")
 
     def tapOther(self):
-        tar_x = randint(int(self.width*0.95),self.width)
-        tar_y = randint(int(self.height*0.25),int(self.height*0.75))
+        """由于截图尺寸是1600*900，所以使用adb点击时应使用它"""
+        tar_x = randint(int(0.95*1600),1600)
+        tar_y = randint(int(0.25*900),900)
         self.device.shell(f"input tap {tar_x} {tar_y}")
 
     def screenshot(self):
@@ -111,12 +111,11 @@ class Base(QThread):
         except Exception as e:
             return None
 
+    # config.general['win_name']
     def resize_win_size(self):
-        handler = win32gui.FindWindow(0, config.general['win_name'])  # 获取窗口句柄
+        handler = win32gui.FindWindow(0, 'ios账号')  # 获取窗口句柄
         self.x_top, self.y_top, self.x_bottom, self.y_bottom = \
             win32gui.GetWindowRect(handler)
-        # self.win_width = self.x_bottom - self.x_top
-        # self.win_height = self.y_bottom - self.y_top
         win32gui.SetWindowPos(handler, win32con.HWND_NOTOPMOST,
                                   self.x_top, self.y_top, 796, 488,
                                   win32con.SWP_SHOWWINDOW)

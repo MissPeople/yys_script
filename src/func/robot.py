@@ -4,6 +4,7 @@ import random
 import time
 from PyQt5.QtCore import pyqtSignal
 
+from src.conf.config import config
 from src.func.base import Base, screenshot_dir
 
 loop_fengmo = []
@@ -12,7 +13,8 @@ loop_douji = []
 loop_activity = [
     'fight',
     'select_boss',
-    'reward'
+    'reward',
+    'victory',
 ]
 
 class Robot(Base):
@@ -38,7 +40,7 @@ class Robot(Base):
         else :
             stages_loop = loop_activity
             second_dir = 'robot/activity'
-
+        aim_num = int(config.general['times'])
         count = 0
         self.stop = False
         while self.stop is False:
@@ -54,26 +56,38 @@ class Robot(Base):
                     break
 
             if found is False:
-                time.sleep(1)  # 常规情况下，休眠1秒
+                time.sleep(0.3)  # 常规情况下，休眠1秒
                 continue
             else:
                 if key == 'fight':
+                    time.sleep(random.uniform(0.5, 1))
                     self.tap(loc[0], loc[1])
+                    time.sleep(0.5)
                     self.display_msg("开始第{0}次战斗".format(count + 1))
-                    time.sleep(random.uniform(0.5, 1.5))
+                    count += 1
                 elif key == 'select_boss':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
-                    time.sleep(170)
-                else:
-                    count += 1
+                    self.display_msg("已选中boss")
+                    time.sleep(160)
+                elif key == 'reward':
+                    time.sleep(random.uniform(2, 3))
+                    self.tapOther()
+                elif key == 'victory':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
-                    time.sleep(random.uniform(2, 3))
-            if count == 200:
+
+            if count == aim_num:
                 self.stop = True
+                self.display_msg("战斗结束！")
+
+            time.sleep(random.uniform(1, 2))
 
 
     def run(self):
         self.resize_win_size()
         self.loop()
+
+if __name__ == '__main__':
+    robot = Robot(config)
+    robot.run()

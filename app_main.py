@@ -73,7 +73,8 @@ class YysWin(QMainWindow):
             titles = []
         elif self.select_fun == '机器人':
             attentions = config.robot['attention']
-            titles = [['副本', '逢魔', '狩猎', '斗技', '活动']]
+            titles = [['副本', '逢魔', '狩猎', '斗技', '活动'],
+                      ['挂机次数', '30', '50', '120', '999'],]
 
         self.show_attention(attentions)
         self.set_comboxes(titles)
@@ -106,6 +107,15 @@ class YysWin(QMainWindow):
         elif self.select_fun == '机器人':
             config.robot['type'] = p1
             self.type = p1
+            config.general['times'] = 0
+            if p2 == '30':
+                config.general['times'] = 30
+            elif p2 == '50':
+                config.general['times'] = 50
+            elif p2 == '120':
+                config.general['times'] = 120
+            elif p2 == '999':
+                config.general['times'] = 999
 
     def btn_autocheck_clicked(self):
         self.display_msg('自动挂机检测：{0}'.format(

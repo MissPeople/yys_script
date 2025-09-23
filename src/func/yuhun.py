@@ -7,51 +7,34 @@ from PyQt5.QtCore import pyqtSignal
 from src.conf.config import config
 from src.func.base import Base, screenshot_dir
 
-loop_fengmo = [
-    'receive',
-    'box',
-    'fight',
-    'end'
-]
-
-loop_douji = [
-    'receive',
-    'fight',
-    'auto',
-    'auto1',
-    'mvp',
-    'reward',
-    'victory',
-    'defeat',
-] 
-loop_activity = [
+stages_loop = [
     'receive',
     'fight',
     'reward',
     'victory',
 ]
 
-class Robot(Base):
+
+class YuHun(Base):
     # 定义类属性为信号函数
     sendmsg = pyqtSignal(str)  #msg
 
     def __init__(self, config):
-        super(Robot, self).__init__()
+        super(YuHun, self).__init__()
         self.stop = True
         self.config = config
-        self.type = config.robot['type']
+        self.type = config.yuhun['type']
 
     def loop(self):
 
-        if self.type == "逢魔":
-            stages_loop = loop_fengmo
-            second_dir = 'robot/fengmo'
-        elif self.type == "斗技":
-            stages_loop = loop_douji
-            second_dir = 'robot/douji'
+        if self.type == "魂十一":
+            sleep_time = 10
+        elif self.type == "魂十二":
+            sleep_time = 20
         else :
-            stages_loop = loop_activity
-            second_dir = 'robot/activity'
+            sleep_time = 20
+
+        second_dir = 'yuhun'
         aim_num = int(config.general['times'])
         count = 0
         self.stop = False
@@ -71,7 +54,7 @@ class Robot(Base):
                     break
 
             if found is False:
-                time.sleep(0.3)  # 常规情况下，休眠1秒
+                time.sleep(1)  # 常规情况下，休眠1秒
                 continue
             else:
                 if key == 'fight':
@@ -80,6 +63,7 @@ class Robot(Base):
                     time.sleep(0.5)
                     self.display_msg("开始第{0}次战斗，当前时间为:{1}".format(count + 1, self.get_time_stmps))
                     count += 1
+                    time.sleep(sleep_time)
                 elif key == 'reward':
                     time.sleep(random.uniform(2, 3))
                     self.tapOther()
@@ -87,20 +71,11 @@ class Robot(Base):
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
                     self.display_msg("第{0}次战斗胜利，当前时间为:{1}".format(count, self.get_time_stmps))
-                elif key == 'defeat':
-                    time.sleep(random.uniform(0.3, 2))
-                    self.tap(loc[0], loc[1])
-                    self.display_msg("第{0}次战斗失败，当前时间为:{1}".format(count, self.get_time_stmps))
                 elif key == 'receive':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
                     self.display_msg("有新的协作已经接取，请注意查看！！")
-                elif key == 'end':
-                    self.stop = True
-                    self.display_msg("自动化结束！")
-                else:
-                    time.sleep(random.uniform(0.3, 1))
-                    self.tap(loc[0], loc[1])
+                
 
             if count == aim_num:
                 self.stop = True
@@ -114,5 +89,5 @@ class Robot(Base):
         self.loop()
 
 if __name__ == '__main__':
-    robot = Robot(config)
+    robot = YuHun(config)
     robot.run()

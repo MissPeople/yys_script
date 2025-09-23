@@ -6,7 +6,6 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import pyqtSignal
 
-from src.func.robot import Robot
 from src.ui import main_widget as UI
 from src.conf import config
 from src.func import *
@@ -141,12 +140,11 @@ class YysWin(QMainWindow):
 
         self.display_msg('启动挂机：{0}:{1}'.format(self.select_fun, self.type))
         if self.select_fun == '御魂':
-            self.display_msg('功能正在开发中。。。')
-            # self.yuhun = yuhun1.Yuhun(yys_window, config.yuhun)
-            # self.yuhun.sendmsg.connect(self.display_msg)
-            # self.stop_run.connect(self.yuhun.stop_run)
-            # self.has_start = True
-            # self.yuhun.start()
+            self.yuhun = yuhun.YuHun(config)
+            self.yuhun.sendmsg.connect(self.display_msg)
+            self.stop_run.connect(self.yuhun.stop_run)
+            self.has_start = True
+            self.yuhun.start()
         elif self.select_fun == '困28':
             self.display_msg('功能正在开发中。。。')
             # self.is_captain = config.chapter.get('captain', True)
@@ -159,7 +157,7 @@ class YysWin(QMainWindow):
             # self.has_start = True
             # self.chapter.start()
         elif self.select_fun == '机器人':
-            self.robot = Robot(config)
+            self.robot = robot.Robot(config)
             self.robot.sendmsg.connect(self.display_msg)
             self.stop_run.connect(self.robot.stop_run)
             self.has_start = True

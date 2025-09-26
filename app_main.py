@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import os
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import pyqtSignal
@@ -81,7 +80,8 @@ class YysWin(QMainWindow):
     def get_config_from_param_cb(self):
         self.select_fun = self.ui.cb_fuctions.currentText()
         adb_port = self.ui.adb_port.text()
-        config.general['win_name'] = self.ui.window_name.text()
+        if self.ui.window_name.text().strip() != '' or None:
+            config.general['win_name'] = self.ui.window_name.text().strip()
         p1 = self.ui.cb_p1.currentText()
         p2 = self.ui.cb_p2.currentText()
         p3 = self.ui.cb_p3.currentText()
@@ -106,7 +106,7 @@ class YysWin(QMainWindow):
         elif self.select_fun == '机器人':
             config.robot['type'] = p1
             self.type = p1
-            config.general['times'] = 0
+            config.general['times'] = 10000
             if p2 == '30':
                 config.general['times'] = 30
             elif p2 == '50':
@@ -157,7 +157,7 @@ class YysWin(QMainWindow):
             # self.has_start = True
             # self.chapter.start()
         elif self.select_fun == '机器人':
-            self.robot = robot.Robot(config)
+            self.robot = robot.Robot()
             self.robot.sendmsg.connect(self.display_msg)
             self.stop_run.connect(self.robot.stop_run)
             self.has_start = True

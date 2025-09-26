@@ -4,8 +4,8 @@ import random
 import time
 from PyQt5.QtCore import pyqtSignal
 
-from src.conf.config import config
 from src.func.base import Base, screenshot_dir
+from src.conf import config
 
 loop_fengmo = [
     'receive',
@@ -24,6 +24,7 @@ loop_douji = [
     'victory',
     'defeat',
 ] 
+
 loop_activity = [
     'receive',
     'fight',
@@ -35,10 +36,9 @@ class Robot(Base):
     # 定义类属性为信号函数
     sendmsg = pyqtSignal(str)  #msg
 
-    def __init__(self, config):
+    def __init__(self):
         super(Robot, self).__init__()
         self.stop = True
-        self.config = config
         self.type = config.robot['type']
 
     def loop(self):
@@ -78,7 +78,7 @@ class Robot(Base):
                     time.sleep(random.uniform(0.5, 1))
                     self.tap(loc[0], loc[1])
                     time.sleep(0.5)
-                    self.display_msg("开始第{0}次战斗，当前时间为:{1}".format(count + 1, self.get_time_stmps))
+                    self.display_msg("开始第{0}次战斗，当前时间为:{1}".format(count + 1, self.get_time_stmps()))
                     count += 1
                 elif key == 'reward':
                     time.sleep(random.uniform(2, 3))
@@ -86,11 +86,11 @@ class Robot(Base):
                 elif key == 'victory':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
-                    self.display_msg("第{0}次战斗胜利，当前时间为:{1}".format(count, self.get_time_stmps))
+                    self.display_msg("第{0}次战斗胜利，当前时间为:{1}".format(count, self.get_time_stmps()))
                 elif key == 'defeat':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
-                    self.display_msg("第{0}次战斗失败，当前时间为:{1}".format(count, self.get_time_stmps))
+                    self.display_msg("第{0}次战斗失败，当前时间为:{1}".format(count, self.get_time_stmps()))
                 elif key == 'receive':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
@@ -110,9 +110,7 @@ class Robot(Base):
 
 
     def run(self):
+        self.display_msg(f"欢迎使用阴阳师自动化脚本!\n当前设备:{config.general['win_name']}\n当前端口:{config.general['adb_port']}\n当前功能:机器人-{self.type}\n当前设置战斗次数:{config.general['times']}\n开始运行，请稍后...")
         self.resize_win_size()
         self.loop()
-
-if __name__ == '__main__':
-    robot = Robot(config)
-    robot.run()
+        self.display_msg("挂机结束，回到初始界面！")

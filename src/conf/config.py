@@ -43,17 +43,18 @@ class Config:
             return default
 
     def init_config(self):
-        self.general['title'] = self.read_option_str('general', 'title','x笑cry-辅助工具')
-        self.general['version'] = self.read_option_str('general', 'version',  'v2.2.2')
+        self.general['title'] = self.read_option_str('general', 'title','YYS助手')
+        self.general['version'] = self.read_option_str('general', 'version',  'v1.0.0')
         self.general['adb_port'] = self.read_option_str('general', 'adb_port', '5555')
+        self.general['win_name'] = self.read_option_str('general', 'win_name', 'ios账号')
+        self.general['times'] = self.read_option_int('general', 'times', 30)
         self.general['attention'] = self.read_option_str( 'general', 'attention', '').replace(r'\n', '\n')
 
-        self.yuhun['times'] = self.read_option_int('yuhun', 'times', 200)
+        self.yuhun['type'] = self.read_option_str('yuhun', 'type', '魂十一')
         self.yuhun['players'] = self.read_option_int('yuhun', 'players', 2)
         self.yuhun['captain'] = self.read_option_bool('yuhun', 'captain', True)
         self.yuhun['attention'] = self.read_option_str('yuhun', 'attention','').replace(r'\n', '\n')
 
-        self.chapter['times'] = self.read_option_int('chapter', 'times', 200)
         self.chapter['players'] = self.read_option_int('chapter', 'players', 1)
         self.chapter['attention'] = self.read_option_str('chapter', 'attention', '').replace(r'\n', '\n')
 

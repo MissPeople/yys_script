@@ -111,9 +111,8 @@ class Base(QThread):
         except Exception as e:
             return None
 
-    # config.general['win_name']
     def resize_win_size(self):
-        handler = win32gui.FindWindow(0, 'ios账号')  # 获取窗口句柄
+        handler = win32gui.FindWindow(0, config.general['win_name'])  # 获取窗口句柄
         self.x_top, self.y_top, self.x_bottom, self.y_bottom = \
             win32gui.GetWindowRect(handler)
         win32gui.SetWindowPos(handler, win32con.HWND_NOTOPMOST,
@@ -121,7 +120,7 @@ class Base(QThread):
                                   win32con.SWP_SHOWWINDOW)
         
     def get_time_stmps(self):
-        timestamp = datetime.now().strftime("%H%M%S")
+        timestamp = datetime.now().strftime("%H:%M:%S")
         return timestamp
 
     def display_msg(self, msg):

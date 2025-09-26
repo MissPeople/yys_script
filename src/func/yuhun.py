@@ -61,7 +61,7 @@ class YuHun(Base):
                     time.sleep(random.uniform(0.5, 1))
                     self.tap(loc[0], loc[1])
                     time.sleep(0.5)
-                    self.display_msg("开始第{0}次战斗，当前时间为:{1}".format(count + 1, self.get_time_stmps))
+                    self.display_msg("开始第{0}次战斗，当前时间为:{1}".format(count + 1, self.get_time_stmps()))
                     count += 1
                     time.sleep(sleep_time)
                 elif key == 'reward':
@@ -70,7 +70,7 @@ class YuHun(Base):
                 elif key == 'victory':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])
-                    self.display_msg("第{0}次战斗胜利，当前时间为:{1}".format(count, self.get_time_stmps))
+                    self.display_msg("第{0}次战斗胜利，当前时间为:{1}".format(count, self.get_time_stmps()))
                 elif key == 'receive':
                     time.sleep(random.uniform(0.3, 2))
                     self.tap(loc[0], loc[1])

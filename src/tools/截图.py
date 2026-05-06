@@ -5,7 +5,7 @@ from adb_shell.auth.sign_pythonrsa import PythonRSASigner
 from PIL import Image
 import io, time
 
-# 连接 MuMu（默认5555端口；网易MuMu12是7555，看你自己设置）
+# 连接 MuMu（默认5555端口；网易MuMu12是7555，看你自己设置， android:5557）
 device = AdbDeviceTcp("127.0.0.1", 5555, default_transport_timeout_s=5.)
 device.connect()
 

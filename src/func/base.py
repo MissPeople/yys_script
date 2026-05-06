@@ -34,12 +34,6 @@ class Base(QThread):
         self.res_path = '../resource'
 
     def open_image_list(self, pics):
-        '''按目录层级打开相应的所有图片，并使用每个name作为key
-            [
-                [dir1, dir2, name1],
-                [dir1, dir2, name2]
-            ]
-        '''
         ims = {}
         for onepath in pics:
             base_dir = screenshot_dir
@@ -69,7 +63,7 @@ class Base(QThread):
 
     def tapOther(self):
         """由于截图尺寸是1600*900，所以使用adb点击时应使用它"""
-        tar_x = randint(int(0.95*1600),1600)
+        tar_x = randint(int(0.98*1600),1600)
         tar_y = randint(int(0.25*900),900)
         self.device.shell(f"input tap {tar_x} {tar_y}")
 

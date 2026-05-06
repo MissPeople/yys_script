@@ -7,7 +7,7 @@ from PyQt5.QtCore import pyqtSignal
 
 from src.ui import main_widget as UI
 from src.conf import config
-from src.func import *
+from src.func import robot, yuhun, chapter
 
 def set_ui_cmbox(cb, lines):
     '''给一个具体的combox控件添加显示项目'''
@@ -63,30 +63,29 @@ class YysWin(QMainWindow):
             titles = [['单人', '组队'], ['队长', '队员'], ['挂机次数', '30', '50', '120', '999'], ['魂土', '魂王']]
         elif self.select_fun == '困28':
             attentions = config.chapter['attention']
-            titles = [['单人', '双人'], ['队长', '队员'],
-                      ['挂机次数', '100', '200', '400', '9999'],
-                      ['谁带输出', '队长', '队员'], ['狗粮类型', 'N卡', '白蛋']]
+            titles = [['挂机次数', '100', '200', '400', '9999']                      ]
         elif self.select_fun == '结界突破':
             attentions = config.yys_break['attention']
             titles = []
         elif self.select_fun == '机器人':
             attentions = config.robot['attention']
-            titles = [['副本', '逢魔',  '斗技', '活动'],
+            titles = [['副本', '斗技', '觉醒/御灵', '活动'],
                       ['挂机次数', '30', '50', '120', '999'],]
 
         self.show_attention(attentions)
         self.set_comboxes(titles)
 
     def get_config_from_param_cb(self):
+
         self.select_fun = self.ui.cb_fuctions.currentText()
         adb_port = self.ui.adb_port.text()
         if self.ui.window_name.text().strip() != '' or None:
             config.general['win_name'] = self.ui.window_name.text().strip()
+        config.general['adb_port'] = adb_port if adb_port != '' else '5555'
         p1 = self.ui.cb_p1.currentText()
         p2 = self.ui.cb_p2.currentText()
         p3 = self.ui.cb_p3.currentText()
         p4 = self.ui.cb_p4.currentText()
-        config.general['adb_port'] = adb_port if adb_port!='' else '5555'
         if self.select_fun == '御魂':
             config.yuhun['players'] = 1 if p1 == '单人' else 2
             config.yuhun['captain'] = p2 == '队长'
@@ -115,6 +114,14 @@ class YysWin(QMainWindow):
                 config.general['times'] = 120
             elif p2 == '999':
                 config.general['times'] = 999
+        elif self.select_fun == '困28':
+            config.general['times'] = 10000
+            if p1 == '100':
+                config.general['times'] = 100
+            elif p1 == '200':
+                config.general['times'] = 200
+            elif p1 == '400':
+                config.general['times'] = 400
 
     def btn_autocheck_clicked(self):
         self.display_msg('自动挂机检测：{0}'.format(
@@ -146,16 +153,11 @@ class YysWin(QMainWindow):
             self.has_start = True
             self.yuhun.start()
         elif self.select_fun == '困28':
-            self.display_msg('功能正在开发中。。。')
-            # self.is_captain = config.chapter.get('captain', True)
-            # if self.is_captain:
-            #     self.chapter = chapter_captain.ChapterCaptain(self, config.chapter)
-            # else:
-            #     self.chapter = chapter.Chapter(self, config.chapter)
-            # self.chapter.sendmsg.connect(self.display_msg)
-            # self.stop_run.connect(self.chapter.stop_run)
-            # self.has_start = True
-            # self.chapter.start()
+            self.chapter = chapter.Chapter()
+            self.chapter.sendmsg.connect(self.display_msg)
+            self.stop_run.connect(self.chapter.stop_run)
+            self.has_start = True
+            self.chapter.start()
         elif self.select_fun == '机器人':
             self.robot = robot.Robot()
             self.robot.sendmsg.connect(self.display_msg)

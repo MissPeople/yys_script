@@ -55,7 +55,6 @@ class Config:
         self.yuhun['captain'] = self.read_option_bool('yuhun', 'captain', True)
         self.yuhun['attention'] = self.read_option_str('yuhun', 'attention','').replace(r'\n', '\n')
 
-        self.chapter['players'] = self.read_option_int('chapter', 'players', 1)
         self.chapter['attention'] = self.read_option_str('chapter', 'attention', '').replace(r'\n', '\n')
 
         self.yys_break['attention'] = self.read_option_str('yys_break', 'attention', '').replace(r'\n', '\n')
